@@ -1,0 +1,16 @@
+material ocean
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check on
+
+			texture_unit
+			{
+				colour_op_ex source1 src_manual src_current 0.25 0.41 0.88
+			}
+		}
+	}
+}

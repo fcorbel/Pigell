@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<MyGUI type="Layout">
+
+<Widget type="Button" skin="Button" position="5 5 100 25" align="Default" layer="Main" name="bt_exit">
+	<Property key="Widget_Caption" value="Exit"/>
+</Widget>
+
+<Widget type="Window" skin="WindowC" position="5 50 200 500" layer="Overlapped" name="mainPanel">
+	<Property key="Widget_Caption" value="Editor"/>
+	<Property key="Window_MinSize" value="200 150"/>
+	
+<!--
+	Resize the map
+-->
+	<Widget type="StaticText" skin="StaticText" position="2 2 20 26">
+		<Property key="Widget_Caption" value="X :"/>
+		<Property key="Text_TextAlign" value="Right VCenter"/>
+	</Widget>
+	<Widget type="Edit" skin="Edit" position="26 2 56 26" name="edit_sizeX">
+		<Property key="Widget_Caption" value="10"/>
+		<Property key="Text_TextAlign" value="Center"/>
+		<Property key="Edit_MaxTextLength" value="3"/>
+	</Widget>
+	<Widget type="StaticText" skin="StaticText" position="90 2 20 26">
+		<Property key="Widget_Caption" value="Z :"/>
+		<Property key="Text_TextAlign" value="Right VCenter"/>
+	</Widget>
+	<Widget type="Edit" skin="Edit" position="114 2 56 26" name="edit_sizeZ">
+		<Property key="Widget_Caption" value="10"/>
+		<Property key="Text_TextAlign" value="Center"/>
+		<Property key="Edit_MaxTextLength" value="3"/>
+	</Widget>
+	<Widget type="Button" skin="Button" position="2 35 100 25" align="Default" layer="Main" name="bt_resize">
+		<Property key="Widget_Caption" value="Resize"/>
+	</Widget>
+	
+<!--
+	Select a matter type
+-->
+	<Widget type="ListBox" skin="ListBox" position="2 65 188 132" align="Stretch" name="list_matter">
+		<Property key="AddItem" value="ocean"/>
+		<Property key="AddItem" value="plain"/>
+		<Property key="AddItem" value="mountain"/>
+		<Property key="AddItem" value="desert"/>
+	</Widget>
+	
+<!--
+	Select brush size
+-->
+	<Widget type="StaticText" skin="StaticText" position="2 200 20 26">
+		<Property key="Widget_Caption" value="1 :"/>
+		<Property key="Text_TextAlign" value="Right VCenter"/>
+	</Widget>
+	<Widget type="Button" skin="RadioButton" position="30 202 20 20" name="radio_1">
+	</Widget>
+	<Widget type="StaticText" skin="StaticText" position="56 200 20 26">
+		<Property key="Widget_Caption" value="2 :"/>
+		<Property key="Text_TextAlign" value="Right VCenter"/>
+	</Widget>
+	<Widget type="Button" skin="RadioButton" position="82 202 20 20" name="radio_2">
+	</Widget>
+	<Widget type="StaticText" skin="StaticText" position="108 200 20 26">
+		<Property key="Widget_Caption" value="3 :"/>
+		<Property key="Text_TextAlign" value="Right VCenter"/>
+	</Widget>
+	<Widget type="Button" skin="RadioButton" position="134 202 20 20" name="radio_3">
+	</Widget>
+
+
+
+</Widget>
+
+</MyGUI>

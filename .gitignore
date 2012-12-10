@@ -1,0 +1,7 @@
+*.log
+*~
+CMakeCache.txt
+CMakeFiles/*
+Makefile
+*.cmake
+pigell

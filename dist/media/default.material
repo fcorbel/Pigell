@@ -1,0 +1,15 @@
+material default
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				filtering none
+				texture test.png
+				#scale 0.5 0.5
+			}
+		}
+	}
+}
