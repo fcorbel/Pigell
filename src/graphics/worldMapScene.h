@@ -54,8 +54,7 @@ class WorldMapScene: public Subscribable
 		std::vector<ChunkInfos> chunkList;
 		//gui
 		std::unique_ptr<WorldMapGui> gui_;
-		
-		//~ Ogre::MovableObject *selectedChunk_;
+		bool mouseButtonPressed;
 		Coordinates selectedCube_;
 		Ogre::SceneNode *selectionMarkNode_;
 };

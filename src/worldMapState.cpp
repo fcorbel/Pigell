@@ -202,5 +202,5 @@ void WorldMapState::changeVoxelType(std::string newType, int x, int y, int z, in
 		arg["z"] = z+j;
 		EventMgrFactory::getCurrentEvtMgr()->sendEvent("cubeModified", arg);
 		}
-	}	
+	}
 }

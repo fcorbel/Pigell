@@ -13,7 +13,7 @@ WorldMapScene::WorldMapScene(Ogre::Root* ogre, Ogre::RenderWindow* window, const
 	cubeSize_{50.0f},
 	chunkSize_{3},
 	gui_{},
-	//~ selectedChunk_{nullptr},
+	mouseButtonPressed{false},
 	selectedCube_{-1,-1,-1},
 	selectionMarkNode_{sceneMgr_->getRootSceneNode()->createChildSceneNode()}
 {
@@ -503,8 +503,12 @@ bool WorldMapScene::initGui(Ogre::RenderWindow *window)
 				arg["radius"] = gui_->getRadius();
 				EventMgrFactory::getCurrentEvtMgr()->sendEvent("changeVoxelType", arg);
 			}
+			mouseButtonPressed = true;
 		}
 	});
+	subscribe("mouseReleased", [this](std::string eventName, Arguments args){
+		mouseButtonPressed = false;
+	});	
 	return true;
 }
 
@@ -526,9 +530,6 @@ void WorldMapScene::checkSelection(int x, int y)
 			if (obj->getName().find("_chunk") != std::string::npos) {
 				//calculate which cube it is
 				Ogre::Vector3 point = rayQuery->getRay().getPoint(ent.distance);
-				//Y is not important on the world map
-				//~ int xCoord = (point.x-0.0001f) / cubeSize_;
-				//~ int zCoord = (point.z-0.0001f) / cubeSize_;
 				//~ LOG(INFO) << xCoord << " " << zCoord;
 				Coordinates newSelec;
 				newSelec.x = (point.x-0.0001f) / cubeSize_;
@@ -536,7 +537,20 @@ void WorldMapScene::checkSelection(int x, int y)
 				newSelec.z = (point.z-0.0001f) / cubeSize_;
 				if (!(newSelec.x == selectedCube_.x && newSelec.y == selectedCube_.y && newSelec.z == selectedCube_.z)) {
 					selectedCube_ = newSelec;
-					EventMgrFactory::getCurrentEvtMgr()->sendEvent("selectedCubeUpdated");						
+					EventMgrFactory::getCurrentEvtMgr()->sendEvent("selectedCubeUpdated");
+					if (mouseButtonPressed) {
+						//maybe it's a mouse drag
+						std::string matter = gui_->getSelectedMatter();
+						if (matter != "") {
+							Arguments arg;
+							arg["matter"] = matter;
+							arg["x"] = selectedCube_.x;
+							arg["y"] = selectedCube_.y;
+							arg["z"] = selectedCube_.z;
+							arg["radius"] = gui_->getRadius();
+							EventMgrFactory::getCurrentEvtMgr()->sendEvent("changeVoxelType", arg);
+						}	
+					}
 				}
 				return;		
 			}
