@@ -17,6 +17,11 @@ WorldMapScene::WorldMapScene(Ogre::Root* ogre, Ogre::RenderWindow* window, const
 	selectedCube_{-1,-1,-1},
 	selectionMarkNode_{sceneMgr_->getRootSceneNode()->createChildSceneNode()}
 {
+	textureAtlasInfos_["ocean"] = 2;
+	textureAtlasInfos_["plain"] = 3;
+	textureAtlasInfos_["mountain"] = 4;
+	textureAtlasInfos_["desert"] = 5;
+	
 	LOG(INFO) << "Creating a new scene: WorldMap";	
 	//load camera
 	camera_->getCameraPtr()->lookAt(0, -1, -0.5); 
@@ -156,11 +161,7 @@ void WorldMapScene::drawMap()
 				++chunkId;
 			}
 		}
-	} 
-	
-	//draw whole map as one chunk
-	//~ drawChunk(0, 0, 0, (*worldMap_)->getSizeX()-1, (*worldMap_)->getSizeY()-1, (*worldMap_)->getSizeZ()-1);
-	//center the camera on the middle of the map
+	}	
 	camera_->setPosition((*worldMap_)->getSizeX()*cubeSize_/2, 300, (*worldMap_)->getSizeZ()*cubeSize_/2+150);
 }
 
@@ -296,11 +297,6 @@ void WorldMapScene::createCube2(int x, int y, int z, std::string id)
 //draw a chunk of the map as one mesh (using a texture atlas)
 void WorldMapScene::drawChunk(int startX, int startY, int startZ, int endX, int endY, int endZ)
 {
-	std::map<std::string, int> textureAtlasInfos;
-	textureAtlasInfos["ocean"] = 2;
-	textureAtlasInfos["plain"] = 3;
-	textureAtlasInfos["mountain"] = 4;
-	textureAtlasInfos["desert"] = 5;
 	//check values
 	if (startX>endX || startY>endY || startZ>endZ) {
 		LOG(WARNING) << "Trying to draw a chunk with incorrect coordinates: from " << startX << "-" << startY << "-" << startZ << " to " << endX << "-" << endY << "-" << endZ;
@@ -346,8 +342,8 @@ void WorldMapScene::drawChunk(int startX, int startY, int startZ, int endX, int 
 						std::string matterType = matVox->getType();
 						int atlasNb = 1; //TODO adjust this number to the row of the material
 						int nbRaw = 8;
-						auto it = textureAtlasInfos.find(matterType);
-						if (it != textureAtlasInfos.end()) {
+						auto it = textureAtlasInfos_.find(matterType);
+						if (it != textureAtlasInfos_.end()) {
 							atlasNb = it->second;
 						}
 						//get the right texture coordinates
@@ -549,7 +545,7 @@ void WorldMapScene::checkSelection(int x, int y)
 							arg["z"] = selectedCube_.z;
 							arg["radius"] = gui_->getRadius();
 							EventMgrFactory::getCurrentEvtMgr()->sendEvent("changeVoxelType", arg);
-						}	
+						}
 					}
 				}
 				return;		

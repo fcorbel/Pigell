@@ -52,6 +52,7 @@ class WorldMapScene: public Subscribable
 		float cubeSize_;
 		int chunkSize_;
 		std::vector<ChunkInfos> chunkList;
+		std::map<std::string, int> textureAtlasInfos_;		
 		//gui
 		std::unique_ptr<WorldMapGui> gui_;
 		bool mouseButtonPressed;
