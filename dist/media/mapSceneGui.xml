@@ -39,6 +39,7 @@
 	Select a matter type
 -->
 	<Widget type="ListBox" skin="ListBox" position="2 65 188 132" align="Stretch" name="list_matter">
+		<Property key="AddItem" value="sea"/>
 		<Property key="AddItem" value="ocean"/>
 		<Property key="AddItem" value="plain"/>
 		<Property key="AddItem" value="mountain"/>

@@ -17,10 +17,11 @@ WorldMapScene::WorldMapScene(Ogre::Root* ogre, Ogre::RenderWindow* window, const
 	selectedCube_{-1,-1,-1},
 	selectionMarkNode_{sceneMgr_->getRootSceneNode()->createChildSceneNode()}
 {
-	textureAtlasInfos_["ocean"] = 2;
+	textureAtlasInfos_["sea"] = 2;
 	textureAtlasInfos_["plain"] = 3;
 	textureAtlasInfos_["mountain"] = 4;
 	textureAtlasInfos_["desert"] = 5;
+	textureAtlasInfos_["ocean"] = 6;
 	
 	LOG(INFO) << "Creating a new scene: WorldMap";	
 	//load camera
