@@ -29,8 +29,11 @@ WorldMapGui::WorldMapGui(Ogre::RenderWindow* window, Ogre::SceneManager *sceneMg
 	radio2_->eventMouseButtonClick += MyGUI::newDelegate(this, &WorldMapGui::buttonClicked);
 	radio3_= myGUI_->findWidget<MyGUI::Button>("radio_3");
 	radio3_->eventMouseButtonClick += MyGUI::newDelegate(this, &WorldMapGui::buttonClicked);
-
-
+	saveBtn_ = myGUI_->findWidget<MyGUI::Button>("bt_save");
+	saveBtn_->eventMouseButtonClick += MyGUI::newDelegate(this, &WorldMapGui::buttonClicked);
+	loadBtn_ = myGUI_->findWidget<MyGUI::Button>("bt_load");
+	loadBtn_->eventMouseButtonClick += MyGUI::newDelegate(this, &WorldMapGui::buttonClicked);
+	
 	//updates to MyGUI
 	subscribe("mouseMoved", [](std::string eventName, Arguments args){
 		MyGUI::InputManager::getInstance().injectMouseMove(
@@ -128,6 +131,14 @@ void WorldMapGui::buttonClicked(MyGUI::WidgetPtr sender)
 		Arguments arg;
 		arg["radius"] = radius_;
 		EventMgrFactory::getCurrentEvtMgr()->sendEvent("markerRadiusChanged", arg);
+	} else if (sender == saveBtn_) {
+		Arguments args;
+		args["filename"] = std::string(myGUI_->findWidget<MyGUI::Edit>("edit_save")->getCaption());
+		EventMgrFactory::getCurrentEvtMgr()->sendEvent("saveWorldMap", args);
+	} else if (sender == loadBtn_) {
+		Arguments args;
+		args["data"] = std::string(myGUI_->findWidget<MyGUI::Edit>("edit_load")->getCaption());
+		EventMgrFactory::getCurrentEvtMgr()->sendEvent("loadWorldMap", args);
 	} else {
 		LOG(WARNING) << "Unknown button clicked";
 	}

@@ -67,7 +67,24 @@
 	</Widget>
 	<Widget type="Button" skin="RadioButton" position="134 202 20 20" name="radio_3">
 	</Widget>
-
+	
+<!--
+	Save/load map
+-->
+	<Widget type="Button" skin="Button" position="138 228 50 25" align="Default" layer="Main" name="bt_save">
+		<Property key="Widget_Caption" value="Save"/>
+	</Widget>
+	<Widget type="Edit" skin="Edit" position="2 228 130 26" name="edit_save">
+		<Property key="Widget_Caption" value="./default.lua"/>
+		<Property key="Text_TextAlign" value="Left"/>
+	</Widget>
+	<Widget type="Button" skin="Button" position="138 258 50 25" align="Default" layer="Main" name="bt_load">
+		<Property key="Widget_Caption" value="Load"/>
+	</Widget>
+	<Widget type="Edit" skin="Edit" position="2 258 130 26" name="edit_load">
+		<Property key="Widget_Caption" value="./default.lua"/>
+		<Property key="Text_TextAlign" value="Left"/>
+	</Widget>
 
 
 </Widget>

@@ -1,6 +1,8 @@
 #include "worldMapState.h"
 #include "eventManager.h"
 #include <glog/logging.h>
+#include "matterVoxel.h"
+
 
 WorldMapState::WorldMapState(Ogre::Root* ogre, Ogre::RenderWindow* window):
 	worldMap_{},
@@ -9,6 +11,9 @@ WorldMapState::WorldMapState(Ogre::Root* ogre, Ogre::RenderWindow* window):
 	LOG(INFO) << "Creating a new state: WorldMap";
 	subscribe("loadWorldMap", [this](std::string eventName, Arguments args){
 		loadWorldMap(boost::any_cast<std::string>(args["data"]));
+	});
+	subscribe("saveWorldMap", [this](std::string eventName, Arguments args){
+		saveWorldMapToLua(boost::any_cast<std::string>(args["filename"]));
 	});
 	subscribe("resizeWorldMap", [this](std::string eventName, Arguments args){
 		resizeWorldMap(boost::any_cast<int>(args["X"]), boost::any_cast<int>(args["Y"]), boost::any_cast<int>(args["Z"]));
@@ -128,6 +133,45 @@ bool WorldMapState::loadWorldMap(MapDefinition mapDefinition)
 	EventMgrFactory::getCurrentEvtMgr()->sendEvent("mapCreated");
 	return true;
 }
+
+bool WorldMapState::saveWorldMapToLua(std::string filename)
+{
+	std::ofstream file(filename.c_str());
+	if (file.is_open()) {
+		file << "mapDef = {\n";
+		for (int x=0; x<worldMap_->getSizeX(); ++x) {
+				for (int y=0; y<worldMap_->getSizeY(); ++y) {
+					for (int z=0; z<worldMap_->getSizeZ(); ++z) {
+						Voxel *vox = worldMap_->getVoxel(x,y,z);
+						std::string name = std::to_string(x) + ":" + std::to_string(z);
+						file << "[\"" << name << "\"] = {\n";
+						file << "  [\"x\"] = " << x << ",\n";
+						file << "  [\"y\"] = " << y << ",\n";
+						file << "  [\"z\"] = " << z << ",\n";
+						file << "  [\"id\"] = \"" << vox->getId() << "\",\n";
+						file << "  [\"properties\"] = {\n";
+						MatterVoxel *mattVox = static_cast<MatterVoxel*>(vox);
+						file << "    [\"matterType\"] = \"" << mattVox->getType() << "\",\n";
+						file << "  }\n";
+						file << "},\n";
+					}
+				}
+		}
+		file << "}";
+		file.close();
+	} else {
+		LOG(WARNING) << "Unable to open file: " << filename;
+		return false;
+	}
+	return true;
+
+
+	
+	
+	//~ worldMap_->writeToFile(filename);
+	return true;
+}
+
 
 int WorldMapState::getIntFieldLua(const char *key, lua_State *L)
 {

@@ -30,6 +30,8 @@ class WorldMapGui: public Subscribable
 		MyGUI::ButtonPtr radio1_;
 		MyGUI::ButtonPtr radio2_;
 		MyGUI::ButtonPtr radio3_;
+		MyGUI::ButtonPtr saveBtn_;
+		MyGUI::ButtonPtr loadBtn_;
 };
 
 #endif

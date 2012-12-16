@@ -32,6 +32,7 @@ class WorldMapState: public Subscribable
 	
 		bool loadWorldMap(std::string filename);
 		bool loadWorldMap(MapDefinition mapDefinition);
+		bool saveWorldMapToLua(std::string filename);
 		int getIntFieldLua(const char *key, lua_State *L);
 		std::string getStringFieldLua(const char *key, lua_State *L);
 		bool resizeWorldMap(int x, int y, int z);

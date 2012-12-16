@@ -162,7 +162,7 @@ void WorldMapScene::drawMap()
 				++chunkId;
 			}
 		}
-	}	
+	}
 	camera_->setPosition((*worldMap_)->getSizeX()*cubeSize_/2, 300, (*worldMap_)->getSizeZ()*cubeSize_/2+150);
 }
 
