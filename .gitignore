@@ -5,3 +5,4 @@ CMakeFiles/*
 Makefile
 *.cmake
 pigell
+dist/bin/default.lua
