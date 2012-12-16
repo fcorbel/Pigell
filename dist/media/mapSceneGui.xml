@@ -44,6 +44,8 @@
 		<Property key="AddItem" value="plain"/>
 		<Property key="AddItem" value="mountain"/>
 		<Property key="AddItem" value="desert"/>
+		<Property key="AddItem" value="forest"/>
+		<Property key="AddItem" value="ice"/>
 	</Widget>
 	
 <!--

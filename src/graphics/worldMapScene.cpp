@@ -17,11 +17,14 @@ WorldMapScene::WorldMapScene(Ogre::Root* ogre, Ogre::RenderWindow* window, const
 	selectedCube_{-1,-1,-1},
 	selectionMarkNode_{sceneMgr_->getRootSceneNode()->createChildSceneNode()}
 {
+	textureAtlasInfos_["unknown"] = 1;	
 	textureAtlasInfos_["sea"] = 2;
 	textureAtlasInfos_["plain"] = 3;
 	textureAtlasInfos_["mountain"] = 4;
 	textureAtlasInfos_["desert"] = 5;
 	textureAtlasInfos_["ocean"] = 6;
+	textureAtlasInfos_["forest"] = 7;
+	textureAtlasInfos_["ice"] = 8;
 	
 	LOG(INFO) << "Creating a new scene: WorldMap";	
 	//load camera
@@ -163,7 +166,7 @@ void WorldMapScene::drawMap()
 			}
 		}
 	}
-	camera_->setPosition((*worldMap_)->getSizeX()*cubeSize_/2, 300, (*worldMap_)->getSizeZ()*cubeSize_/2+150);
+	camera_->setPosition((*worldMap_)->getSizeX()*cubeSize_/2, 500, (*worldMap_)->getSizeZ()*cubeSize_/2+150);
 }
 
 void WorldMapScene::createCube(int x, int y, int z, std::string id)
@@ -341,8 +344,8 @@ void WorldMapScene::drawChunk(int startX, int startY, int startZ, int endX, int 
 						MatterVoxel *matVox;
 						matVox = static_cast<MatterVoxel*>(vox);
 						std::string matterType = matVox->getType();
-						int atlasNb = 1; //TODO adjust this number to the row of the material
-						int nbRaw = 8;
+						int atlasNb = 1; //adjust this number to the row of the material
+						int nbRaw = textureAtlasInfos_.size();
 						auto it = textureAtlasInfos_.find(matterType);
 						if (it != textureAtlasInfos_.end()) {
 							atlasNb = it->second;
@@ -352,6 +355,7 @@ void WorldMapScene::drawChunk(int startX, int startY, int startZ, int endX, int 
 						float x1 = 1;
 						float y0 = (float)(atlasNb-1) / nbRaw;
 						float y1 = (float)atlasNb / nbRaw;
+						//~ LOG(INFO) << "mat: " << matterType << " = " << atlasNb;
 						//~ LOG(INFO) << x0 << " " << x1 << " " << y0 << " " << y1;
 						//create a representation for that voxel
 						//top
