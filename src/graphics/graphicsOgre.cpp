@@ -8,7 +8,7 @@ GraphicsOgre::GraphicsOgre(const Options *config):
 	LOG(INFO) << "Initializing Ogre";
 	//use OpenGL
 	const std::string pluginsFolder = config->getValue<std::string>("ogrePluginsFolder");
-	ogre_->loadPlugin(pluginsFolder + "/RenderSystem_GL");
+	ogre_->loadPlugin(pluginsFolder + "RenderSystem_GL");
 	const Ogre::RenderSystemList renderList = ogre_->getAvailableRenderers();
 	Ogre::RenderSystemList::const_iterator r_it;
 	r_it = renderList.begin();

@@ -3,17 +3,28 @@
 #include <iostream>
 #include <algorithm>
 
-EventManager::EventManager():
+EventManager::EventManager(const std::string name, const bool log=true):
+	log_{log},
+	logFileName_{},
+	logFile_{},
 	idCount_(0),
 	registeredCbks_{},
 	eventQueue_{}
 {
-	
+	if (log_) {
+		std::string logFileName = "events_" + name + ".log";
+		//~ logFileName_ = logFileName.c_str(); //TODO
+		//~ logFile_.open(logFileName_, , std::ios::trunc);
+		if (logFile_.is_open()) {
+			//TODO insert date/hour
+			logFile_ << "[DATE/TIME] Log file for \"" << name << "\" event manager started\n";
+			logFile_.close();
+		}
+	}
 }
 
 EventManager::~EventManager()
 {
-	
 }
 
 int EventManager::subscribe(const std::string eventName, const CallBkFunc lambdaFunc)
@@ -44,6 +55,15 @@ void EventManager::sendEvent(const std::string eventName, const Arguments args)
 		LOG(INFO) << "New event received: " << eventName;
 		MyEvent ev = { eventName, args };
 		eventQueue_.push(ev);
+		
+		if (log_) {
+			logFile_.open(logFileName_, std::ios::app);
+			if (logFile_.is_open()) {
+				//TODO insert date/hour
+				logFile_ << "[DATE/TIME] Event received: \"" << eventName << "\n";
+				logFile_.close();
+			}
+		}
 }
 
 void EventManager::processEvents()
@@ -144,10 +164,10 @@ EventMgrFactory::~EventMgrFactory() {
 	
 }
 
-bool EventMgrFactory::createEvtMgr(std::string name)
+bool EventMgrFactory::createEvtMgr(const std::string name)
 {
 	if (EventMgrList_.find(name) == EventMgrList_.end()) {
-		EventMgrList_[name] = std::make_shared<EventManager>();
+		EventMgrList_[name] = std::make_shared<EventManager>(name, true);
 		currentEvtMgr_ = {name, EventMgrList_[name]};
 		return true;
 	} else {
@@ -156,7 +176,7 @@ bool EventMgrFactory::createEvtMgr(std::string name)
 	}
 }
 
-bool EventMgrFactory::deleteEvtMgr(std::string name)
+bool EventMgrFactory::deleteEvtMgr(const std::string name)
 {
 	auto EvtMgr = EventMgrList_.find(name);
 	if (EvtMgr == EventMgrList_.end()) {
@@ -172,7 +192,7 @@ bool EventMgrFactory::deleteEvtMgr(std::string name)
 	}
 }
 
-bool EventMgrFactory::setCurrentEvtMgr(std::string name)
+bool EventMgrFactory::setCurrentEvtMgr(const std::string name)
 {
 	auto EvtMgr = EventMgrList_.find(name);
 	if (EvtMgr == EventMgrList_.end()) {

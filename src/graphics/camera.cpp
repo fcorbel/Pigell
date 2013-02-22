@@ -7,7 +7,7 @@ Camera::Camera(Ogre::String camName, Ogre::SceneManager* sceneMgr, Ogre::RenderW
 	rotY_{0},
 	direction_{Ogre::Vector3::ZERO},
 	rotSpeed_{0.2},
-	mvtSpeed_{0.00006}
+	mvtSpeed_{0.0006}
 {
 	cameraNode_ = scene_->getRootSceneNode()->createChildSceneNode();	
 	cameraYawNode_ = cameraNode_->createChildSceneNode();

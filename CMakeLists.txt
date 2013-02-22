@@ -84,8 +84,8 @@ endif()
 
 # Find glog
 find_library(GLOG_LIBRARIES glog)
-find_path(GLOG_INCLUDE_DIRS logging.h /usr/local/include/glog)
-#find_path(GLOG_INCLUDE_DIRS logging.h /usr/include/glog)
+#find_path(GLOG_INCLUDE_DIRS logging.h /usr/local/include/glog)
+find_path(GLOG_INCLUDE_DIRS logging.h /usr/include/glog)
 if(NOT GLOG_INCLUDE_DIRS)
 	message(SEND_ERROR "Failed to find GLOG.")
 endif()

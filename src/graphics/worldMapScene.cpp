@@ -11,7 +11,7 @@ WorldMapScene::WorldMapScene(Ogre::Root* ogre, Ogre::RenderWindow* window, const
 	worldMapNode_{sceneMgr_->getRootSceneNode()->createChildSceneNode()},
 	camera_{std::unique_ptr<Camera>(new Camera("mainCam", sceneMgr_, window))},
 	cubeSize_{50.0f},
-	chunkSize_{3},
+	chunkSize_{8},
 	gui_{},
 	mouseButtonPressed{false},
 	selectedCube_{-1,-1,-1},
